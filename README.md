@@ -6,4 +6,3 @@ Subcategory
 Title
 Price
 Popularity 
-
