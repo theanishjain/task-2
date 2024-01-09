@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display JSON Data</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #e6e6e6;
+        }
+
+        .import-data {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .step-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            background-color: #e6e6e6;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .step {
+            min-width: 40%;
+            padding: 20px;
+            margin: 20px;
+            border-bottom: 1px solid #ddd;
+            background-color: #bbb;
+            border-radius: 8px;
+        }
+
+        .step h2 {
+            color: #1269f6;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #000;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        #format-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        select,
+        input[type="text"] {
+            width: 48%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #000;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        #display-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        #availableFields,
+        #displayFields {
+            width: 150px;
+            height: 150px;
+            border: 1px solid #000;
+            border-radius: 4px;
+            padding: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 4px;
+            font-size: larger;
+            border-width: 4px;
+        }
+
+        thead {
+            background-color: #cccccc;
+            color: #1269f6;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            border-bottom: 1px solid #000;
+        }
+
+        #table-body tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="import-data">
+        <h1 style="color: #1269f6;">Import Data</h1>
+        <div class="step-container">
+            <div class="step">
+                <h2>Step 1: Select File</h2>
+                <form id="jsonDataForm">
+                    <label for="jsonFile">Upload File:</label>
+                    <select id="file-type">
+                        <option value="CSV">CSV</option>
+                        <option value="JSON" selected>JSON</option>
+                    </select>
+                    <input type="file" id="jsonFile" accept=".json">
+                    <button type="submit">Load Data</button>
+                </form>
+            </div>
+
+            <div class="step">
+                <h2>Step 2: Specify Format</h2>
+                <div id="format-section">
+                    <label for="file-type">File Type:</label>
+                    <select id="file-type">
+                        <option value="CSV">CSV</option>
+                        <option value="JSON" selected>JSON</option>
+                    </select>
+                    <br><br><br>
+                    <label for="character-encoding">Character Encoding:</label>
+                    <select id="character-encoding">
+                        <option value="UTF-8" selected>UTF-8</option>
+                    </select>
+                    <br><br><br>
+                    <label for="delimiter">Delimiter:</label>
+                    <input type="text" id="delimiter" value="," />
+                </div>
+            </div>
+
+            <div class="step">
+                <h2>Step 3: Display Handling</h2>
+                <div id="container">
+                    <label>Select fields to be displayed:</label><br>
+                    <select id="availableFields" multiple>
+                        <option value="productId">Product Id</option>
+                        <option value="subcategory">Subcategory</option>
+                        <option value="title">Title</option>
+                        <option value="price">Price</option>
+                        <option value="popularity">Popularity</option>
+                        <option value="description">Description</option>
+                        <option value="rating">Rating</option>
+                        <option value="utmSource">UTM Source</option>
+                        <option value="utmMedium">UTM Medium</option>
+                    </select>
+
+                    <div>
+                        <button id="addToDisplay" style="background-color: #1269f6; color: #fff;">>></button>
+                        <button id="removeFromDisplay" style="background-color: #1269f6; color: #fff;"><<</button>
+                    </div>
+
+                    <select id="displayFields" multiple></select>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="color: #1269f6;">Displayed Data:</h2>
+        <table id="displayTable" style="display: none;">
+            <thead>
+                <tr id="tableHeaders"></tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+        <script src="script.js"></script>
+    </div>
+</body>
+
+</html>
